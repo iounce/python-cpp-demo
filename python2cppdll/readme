@@ -1,0 +1,9 @@
+1.编写C++文件TraderSpi.h
+2.编写SWIG文件python_api.i
+3.执行SWIG转换：
+  swig -c++ -python python_api.i
+4.编写setup.py文件
+5.编译python包：
+  python setup.py build
+6.编写python测试程序：
+  python main.py
