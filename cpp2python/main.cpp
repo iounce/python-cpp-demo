@@ -37,26 +37,35 @@ public:
     AutoReference()
     {
     }
-    AutoReference(PyObject *obj, bool addRef = false)
+
+    AutoReference(PyObject *obj)
     {
-        addObj(obj, addRef);
+        addObj(obj, false, true);
     }
+
     ~AutoReference()
+    {
+    }
+
+    void release()
     {
         for (size_t i = 0; i < m_objs.size(); i++)
         {
             PyObject *obj = m_objs[i];
             if (obj != nullptr)
             {
-                Py_DECREF(obj);
-                obj = nullptr;
+                if (obj->ob_refcnt > 0)
+                {
+                    Py_DECREF(obj);
+                }
             }
         }
 
         m_objs.clear();
     }
 
-    void addObj(PyObject *obj, bool addRef = false)
+public:
+    void addObj(PyObject *obj, bool addRef = false, bool last = false)
     {
         if (addRef)
         {
@@ -64,6 +73,11 @@ public:
         }
 
         m_objs.push_back(obj);
+
+        if (last)
+        {
+            release();
+        }
     }
 private:
     vector<PyObject *> m_objs;
@@ -103,17 +117,20 @@ int main()
         PyObject *result = PyObject_CallObject(sayHello, nullptr);
         if (result == nullptr)
         {
+            autoRef.release();
+
             cout << "Call function failed" << endl;
             return 0;
         }
-
-        autoRef.addObj(result);
 
         if (PyUnicode_Check(result))
         {
             const char *data = PyUnicode_AsUTF8(result);
             cout << utf82gbk(data) << endl;
         }
+
+        autoRef.addObj(result);
+        autoRef.release();
     }
 
     {
@@ -137,23 +154,26 @@ int main()
         PyTuple_SetItem(args, 1, value2);
 
         autoRef.addObj(args);
-        autoRef.addObj(value1);
-        autoRef.addObj(value2);
+        //autoRef.addObj(value1);
+        //autoRef.addObj(value2);
 
         PyObject *result = PyObject_CallObject(addValue, args);
         if (result == nullptr)
         {
+            autoRef.release();
+
             cout << "Call function failed" << endl;
             return 0;
         }
-
-        autoRef.addObj(result);
 
         if (PyLong_Check(result))
         {
             int data = PyLong_AsLong(result);
             cout << data << endl;
         }
+
+        autoRef.addObj(result);
+        autoRef.release();
     }
 
     {
@@ -180,7 +200,7 @@ int main()
         PyList_Append(listArgs, intValue3);
 
         autoRef.addObj(funcArgs);
-        autoRef.addObj(listArgs);
+        //autoRef.addObj(listArgs);
         autoRef.addObj(intValue1);
         autoRef.addObj(intValue2);
         autoRef.addObj(intValue3);
@@ -190,6 +210,8 @@ int main()
         PyObject *result = PyObject_CallObject(int2str, funcArgs);
         if (result == nullptr)
         {
+            autoRef.release();
+
             cout << "Call function failed" << endl;
             return 0;
         }
@@ -211,6 +233,9 @@ int main()
                 }
             }
         }
+
+        autoRef.addObj(result);
+        autoRef.release();
     }
 
     {
@@ -237,18 +262,20 @@ int main()
         PyTuple_SetItem(orderArgs, 0, dictArgs);
 
         autoRef.addObj(orderArgs);
-        autoRef.addObj(dictArgs);
+        //autoRef.addObj(dictArgs);
         autoRef.addObj(dvalue1);
         autoRef.addObj(dvalue2);
 
         PyObject *result = PyObject_CallObject(packOrder, orderArgs);
         if (result == nullptr)
         {
+            autoRef.release();
+
             cout << "Call function failed" << endl;
             return 0;
         }
 
-        autoRef.addObj(result);
+        autoRef.release();
 
         if (PyDict_Check(result))
         {
@@ -297,6 +324,9 @@ int main()
                 }
             }
         }
+
+        autoRef.addObj(result);
+        autoRef.release();
     }
 
     Py_Finalize();
