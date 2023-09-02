@@ -50,6 +50,51 @@
         <source>title_msg_no</source>
         <translation>取消</translation>
     </message>
+    
+    <message>
+        <source>label_class_name</source>
+        <translation>类名:</translation>
+    </message>
+    <message>
+        <source>label_file_name</source>
+        <translation>文件名:</translation>
+    </message>
+    <message>
+        <source>btn_add_func</source>
+        <translation>增加函数</translation>
+    </message>
+    <message>
+        <source>btn_del_func</source>
+        <translation>减少函数</translation>
+    </message>
+    <message>
+        <source>btn_gen_file</source>
+        <translation>生成文件</translation>
+    </message>
+    <message>
+        <source>label_return_value</source>
+        <translation>返回值:</translation>
+    </message>
+    <message>
+        <source>label_func_name</source>
+        <translation>函数名:</translation>
+    </message>
+    <message>
+        <source>label_input_param</source>
+        <translation>入参:</translation>
+    </message>
+    <message>
+        <source>column_return_value</source>
+        <translation>返回值</translation>
+    </message>
+    <message>
+        <source>column_func_name</source>
+        <translation>函数名</translation>
+    </message>
+    <message>
+        <source>column_input_param</source>
+        <translation>入参[0...n]</translation>
+    </message>
 </context>
 <context>
     <name>ThemeWindow</name>

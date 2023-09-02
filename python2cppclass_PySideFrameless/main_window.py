@@ -189,9 +189,10 @@ class MainWindow(QMainWindow):
         self.layout_class_left.addWidget(widget)
 
         label_class_name = QLabel()
-        label_class_name.setText(WidthHelper.format_text("类名:"))
+        label_class_name.setText(WidthHelper.format_text(MainWindow.tr('label_class_name')))
         label_class_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label_class_name.setMaximumWidth(64)
+        self.wid_mng.add(label_class_name, text='label_class_name')
         self.layout_class_left.addWidget(label_class_name)
 
         self.edit_class_name = QLineEdit()
@@ -201,9 +202,10 @@ class MainWindow(QMainWindow):
         self.layout_class_left.addWidget(self.edit_class_name)
 
         label_file_name = QLabel()
-        label_file_name.setText(WidthHelper.format_text("文件名:"))
+        label_file_name.setText(WidthHelper.format_text(MainWindow.tr('label_file_name')))
         label_file_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label_file_name.setMaximumWidth(64)
+        self.wid_mng.add(label_file_name, text='label_class_name')
         self.layout_class_left.addWidget(label_file_name)
 
         self.edit_file_name = QLineEdit()
@@ -217,24 +219,27 @@ class MainWindow(QMainWindow):
         self.layout_class_left.addItem(spacer)
 
         self.btn_add_func = QPushButton()
-        self.btn_add_func.setText(WidthHelper.format_text("增加函数"))
+        self.btn_add_func.setText(WidthHelper.format_text(MainWindow.tr('btn_add_func')))
         self.btn_add_func.setMaximumWidth(96)
         self.btn_add_func.setMinimumHeight(32)
         self.btn_add_func.clicked.connect(self.on_add_func)
+        self.wid_mng.add(self.btn_add_func, text='btn_add_func')
         self.layout_class_right.addWidget(self.btn_add_func)
 
         self.btn_sub_func = QPushButton()
-        self.btn_sub_func.setText(WidthHelper.format_text("减少函数"))
+        self.btn_sub_func.setText(WidthHelper.format_text(MainWindow.tr('btn_del_func')))
         self.btn_sub_func.setMaximumWidth(96)
         self.btn_sub_func.setMinimumHeight(32)
         self.btn_sub_func.clicked.connect(self.on_sub_func)
+        self.wid_mng.add(self.btn_sub_func, text='btn_add_func')
         self.layout_class_right.addWidget(self.btn_sub_func)
 
         self.btn_gen_cpp = QPushButton()
-        self.btn_gen_cpp.setText(WidthHelper.format_text("生成文件"))
+        self.btn_gen_cpp.setText(WidthHelper.format_text(MainWindow.tr('btn_gen_file')))
         self.btn_gen_cpp.setMaximumWidth(96)
         self.btn_gen_cpp.setMinimumHeight(32)
         self.btn_gen_cpp.clicked.connect(self.on_gen_cpp)
+        self.wid_mng.add(self.btn_gen_cpp, text='btn_add_func')
         self.layout_class_right.addWidget(self.btn_gen_cpp)
 
         widget = QWidget(self)
@@ -249,9 +254,10 @@ class MainWindow(QMainWindow):
         self.layout_func_left.addWidget(widget)
 
         label_return_name = QLabel()
-        label_return_name.setText(WidthHelper.format_text("返回值:"))
+        label_return_name.setText(WidthHelper.format_text(MainWindow.tr('label_return_value')))
         label_return_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label_return_name.setMaximumWidth(64)
+        self.wid_mng.add(label_return_name, text='label_return_value')
         self.layout_func_left.addWidget(label_return_name)
 
         self.edit_return_name = QLineEdit()
@@ -261,9 +267,10 @@ class MainWindow(QMainWindow):
         self.layout_func_left.addWidget(self.edit_return_name)
 
         label_func_name = QLabel()
-        label_func_name.setText(WidthHelper.format_text("函数名:"))
+        label_func_name.setText(WidthHelper.format_text(MainWindow.tr('label_func_name')))
         label_func_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label_func_name.setMaximumWidth(64)
+        self.wid_mng.add(label_func_name, text='label_func_name')
         self.layout_func_left.addWidget(label_func_name)
 
         self.edit_func_name = QLineEdit()
@@ -272,9 +279,10 @@ class MainWindow(QMainWindow):
         self.layout_func_left.addWidget(self.edit_func_name)
 
         label_param_name = QLabel()
-        label_param_name.setText(WidthHelper.format_text("入参:"))
+        label_param_name.setText(WidthHelper.format_text(MainWindow.tr('label_input_param')))
         label_param_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label_param_name.setMaximumWidth(64)
+        self.wid_mng.add(label_param_name, text='label_input_param')
         self.layout_func_left.addWidget(label_param_name)
 
         self.edit_param_name = QLineEdit()
@@ -301,7 +309,7 @@ class MainWindow(QMainWindow):
         self.layout_result.addWidget(widget)
 
     def init_result_table(self):
-        table_col_names = ['返回值', '函数名', '(', '入参[0...n]', ')', ';']
+        table_col_names = [MainWindow.tr('column_return_value'), MainWindow.tr('column_func_name'), '(', MainWindow.tr('column_input_param'), ')', ';']
 
         self.table_result = QTableWidget(self.ui.widget_body)
         self.layout_result.addWidget(self.table_result)
@@ -359,10 +367,16 @@ class MainWindow(QMainWindow):
 
         one = QApplication.instance()
         one.quit()
+        
+    def update_table_title(self):
+        table_col_names = [MainWindow.tr('column_return_value'), MainWindow.tr('column_func_name'), '(', MainWindow.tr('column_input_param'), ')', ';']
+        self.table_result.setHorizontalHeaderLabels(table_col_names)
 
     # update widgets that created dynamically
     # call this function when changing language
     def update_dynamic_widgets(self):
+        self.update_table_title()
+        
         dynamic_widgets = self.wid_mng.get_all()
         for (widget, text) in dynamic_widgets.items():
             if isinstance(widget, QMenu):

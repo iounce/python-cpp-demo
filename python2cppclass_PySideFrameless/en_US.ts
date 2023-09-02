@@ -50,6 +50,51 @@
         <source>title_msg_no</source>
         <translation>Cancel</translation>
     </message>
+
+    <message>
+        <source>label_class_name</source>
+        <translation>Class:</translation>
+    </message>
+    <message>
+        <source>label_file_name</source>
+        <translation>File:</translation>
+    </message>
+    <message>
+        <source>btn_add_func</source>
+        <translation>Add</translation>
+    </message>
+    <message>
+        <source>btn_del_func</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>btn_gen_file</source>
+        <translation>Generate</translation>
+    </message>
+    <message>
+        <source>label_return_value</source>
+        <translation>Return:</translation>
+    </message>
+    <message>
+        <source>label_func_name</source>
+        <translation>Function:</translation>
+    </message>
+    <message>
+        <source>label_input_param</source>
+        <translation>Input:</translation>
+    </message>
+    <message>
+        <source>column_return_value</source>
+        <translation>Return</translation>
+    </message>
+    <message>
+        <source>column_func_name</source>
+        <translation>Function</translation>
+    </message>
+    <message>
+        <source>column_input_param</source>
+        <translation>Input[0...n]</translation>
+    </message>
 </context>
 <context>
     <name>ThemeWindow</name>
