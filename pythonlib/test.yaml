@@ -1,0 +1,14 @@
+id: 123
+name: 张三
+age: 20
+books: ['A', 'B', 'C']
+
+language:
+  - Chinese
+  - English
+
+test:
+  name: login test
+  request:
+    api: api/v1/login
+    method: post
